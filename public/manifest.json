@@ -1,0 +1,12 @@
+{
+    "name": "Let's Twitt",
+    "version": "1.0",
+    "description": "Recuerda twittear varias veces al día.",
+    "manifest_version": 3,
+    "permissions": ["activeTab"],
+    "action": {
+      "default_title": "Let's Twitt",
+      "default_popup": "popup.html"
+    }
+  }
+  
