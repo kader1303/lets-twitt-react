@@ -56,7 +56,7 @@ function Popup() {
                 <input type="text" id="twitt-input" placeholder="Sobre que quieres Twittear" value={tema} onChange={handleTemaChange} />
             </div>
             <div id="twitt-container">
-                <p id="twitt-text" style={ {marginTop: 20} }>
+                <p id="twitt-text" style={{marginTop: 20}}>
                     {twitt}
                 </p>
             </div>
