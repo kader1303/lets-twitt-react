@@ -1,4 +1,5 @@
-import React from "react";
+/*global chrome*/
+import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import axios from 'axios';
 
@@ -34,33 +35,57 @@ function Popup() {
 
     const [tema, setTema] = React.useState('');
     const [twitt, setTwitt] = React.useState('');
+    const [loading, setloading] = useState(false)
+    const [background, setbackground] = useState('rgba(0, 0, 0, 0)')
 
     const handleTemaChange = (event) => {
         setTema(event.target.value);
     };
 
-    const handleGenerateTwitt = async () => { 
+    const handleGenerateTwitt = async () => {
+        setloading(true);
+        setbackground('rgba(0, 0, 0, 0.5)');
         const Twitt = await useGetTwitt(tema);
+        setloading(false);
+        setbackground('rgba(0, 0, 0, 0)');
         setTwitt(Twitt);
         console.log(Twitt);
     };
 
     return (
-        <div>
-            <h1>Let's Twitt</h1>
-            <p>Recuerda twittear varias veces al día.</p>
+        <div id="container" style={{
+            backgroundColor: background,
+        }}>
+            <div id="popup">
+                <h1>Let's Twitt</h1>
+                <img src="/assets/twitter.png" style={{ height: 35, width: 35, marginLeft: 20 }} alt='icono de twitter'></img>
+            </div>
+
             <div id="twitt-form-container">
+                <p>Recuerda twittear varias veces al día.</p>
                 <button id="generate-button" onClick={handleGenerateTwitt}>
                     Generar twitt
                 </button>
-                <input type="text" id="twitt-input" placeholder="Sobre que quieres Twittear" value={tema} onChange={handleTemaChange} />
+                <input type="text" className="input" name="text" id="twitt-input" placeholder="Sobre que quieres Twittear" value={tema} onChange={handleTemaChange} />
             </div>
+            {
+                loading &&
+                <div class="loader">
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                </div>
+
+            }
             <div id="twitt-container">
-                <p id="twitt-text" style={{marginTop: 20}}>
-                    {twitt}
-                </p>
+                {
+                    twitt &&
+                    <blockquote contenteditable="true">
+                        <p>{twitt}</p>
+                    </blockquote>
+                }
             </div>
-            <div id="output"></div>
             <script type="module" src="popup.js"></script>
             <script src="popup.js" type="text/javascript"></script>
         </div>
