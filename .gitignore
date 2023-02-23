@@ -1,2 +1,15 @@
-/dist
-/node_modules
+#dependencies
+variables.env
+node_modules
+.DS_Store
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+#yarn exclusion
+yarn.lock
+yarn-error.log

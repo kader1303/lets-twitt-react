@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: {
     popup: './src/popup.jsx',
+    background: './src/background.jsx',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
