@@ -25,16 +25,36 @@ class TwittDetailsImpl {
     }
 }
 
+class IdeasDetailsImpl {
+    async idea() {
+        try {
+            const response = await LetsTwittApi.get('/letstwitt/getideas');
+            return response.data;
+        } catch (error) {
+            console.log('Error: ' + JSON.stringify(error.response?.data));
+            const apierr = JSON.parse(JSON.stringify(error.response?.data));
+            return Promise.resolve(apierr);
+        }
+    }
+}
+
 const useGetTwitt = async (tema) => {
     const twittDetails = new TwittDetailsImpl();
     const response = await twittDetails.twitt(tema);
     return response.result.choices[0].text;
 };
 
+const useGetIdeas = async () => {
+    const ideasDetails = new IdeasDetailsImpl();
+    const response = await ideasDetails.idea();
+    return response.result.choices[0].text;
+}
+
 function Popup() {
 
     const [tema, setTema] = React.useState('');
     const [twitt, setTwitt] = React.useState('');
+    const [ideas, setIdeas] = React.useState('');
     const [loading, setloading] = useState(false)
     const [background, setbackground] = useState('rgba(0, 0, 0, 0)')
 
@@ -49,8 +69,16 @@ function Popup() {
         setloading(false);
         setbackground('rgba(0, 0, 0, 0)');
         setTwitt(Twitt);
-        console.log(Twitt);
     };
+
+    const handleGenerateIdeas = async () => {
+        setloading(true);
+        setbackground('rgba(0, 0, 0, 0.5)');
+        const Ideas = await useGetIdeas();
+        setloading(false);
+        setbackground('rgba(0, 0, 0, 0)');
+        setIdeas('Propuestas:' + Ideas);
+    }
 
     return (
         <div id="container" style={{
@@ -63,10 +91,16 @@ function Popup() {
 
             <div id="twitt-form-container">
                 <p>Recuerda twittear varias veces al día.</p>
+                <input type="text" className="input" name="text" id="twitt-input" placeholder="Sobre que quieres Twittear" value={tema} onChange={handleTemaChange} />
                 <button id="generate-button" onClick={handleGenerateTwitt}>
                     Generar twitt
                 </button>
-                <input type="text" className="input" name="text" id="twitt-input" placeholder="Sobre que quieres Twittear" value={tema} onChange={handleTemaChange} />
+            </div>
+            <div id="twitt-suggest-container">
+                <button id="generate-ideas" onClick={handleGenerateIdeas} style={{marginRight: 20}}>
+                    Sugerir Temas
+                </button>
+                <textarea id="ideas-generated" defaultValue={ideas} contentEditable={true}/>
             </div>
             {
                 loading &&

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Lets Twitt - Tu generador de tweets</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		h1 {
+			font-size: 24px;
+			margin-top: 20px;
+		}
+		p {
+			margin-top: 10px;
+		}
+		input[type=text] {
+			width: 80%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			box-sizing: border-box;
+			border: 2px solid #ccc;
+			border-radius: 4px;
+			font-size: 16px;
+		}
+		button {
+			background-color: #4CAF50;
+			color: white;
+			padding: 12px 20px;
+			margin: 8px 0;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 16px;
+		}
+		button:hover {
+			background-color: #45a049;
+		}
+		ul {
+			margin-top: 10px;
+			padding: 0;
+			list-style-type: none;
+		}
+		li {
+			margin-top: 5px;
+		}
+		textarea {
+			width: 80%;
+			height: 100px;
+			padding: 12px 20px;
+			margin: 8px 0;
+			box-sizing: border-box;
+			border: 2px solid #ccc;
+			border-radius: 4px;
+			font-size: 16px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Lets Twitt - Tu generador de tweets</h1>
+	<p>Escribe un tema y genera un tweet</p>
+	<input type="text" id="tema">
+	<button onclick="generarTweet()">Generar tweet</button>
+	<button onclick="sugerirTema()">Sugerir tema</button>
+	<ul id="listaTemas">
+		<!-- Aquí se mostrarán los temas sugeridos -->
+	</ul>
+	<textarea id="tweetGenerado" readonly></textarea>
+
+	<script>
+		function generarTweet() {
+			// Aquí se genera el tweet a partir del tema ingresado
+			// y se muestra en el campo de texto
+			let tema = document.getElementById("tema").value;
+			let tweet = "Acabo de twittear sobre '" + tema + "'. ¡Echa un vistazo! #LetsTwitt";
+			document.getElementById("tweetGenerado").value = tweet;
+		}
+
+		function sugerirTema() {
+			// Aquí se sugieren algunos temas para el usuario
+			// y se muestran en la lista
+			let temasSugeridos = ["Deporte", "Tecnología", "Cine", "Política", "Música"];
+			let lista = document.getElementById("listaTemas");
+			lista.innerHTML = "";
+			for (let i = 0; i < temasSugeridos.length; i++) {
+				let li = document.createElement("li");
+				li.textContent = temasSugeridos[i];
+				lista.appendChild(li);
+			}
+		}
+	</script>
+</body>
+</html>
